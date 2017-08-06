@@ -60,24 +60,27 @@ function twilio_user_delete($account) {
 
 /**
  * Saves mobile number data to the {twilio_user} table in the database.
+ *  8/17/mcl: modify call, only one param in backdrop hook_user_save
  */
-function twilio_user_save(&$edit, $account, $category) {
-  if (($category == 'twilio') && isset($edit['twilio'])) {
-    $number = (object) $edit['twilio'];
-    $number->uid = $account->uid;
+//function twilio_user_save(&$edit, $account, $category) {
+function twilio_user_save($account) {  
 
+ if (isset($account->twilio_user['status'])) {
+
+    $number = $account->twilio_user;
+    $number->uid = $account->uid;
+   
     $primary_keys = array();
-    if (isset($account->twilio_user['status'])) {
-      if ($account->twilio_user['status'] == TWILIO_USER_PENDING && $edit['twilio']['status'] == TWILIO_USER_CONFIRMED) {
+    if (isset($account->twilio_user['status'])) {  
+      if ($account->twilio_user['status'] == TWILIO_USER_CONFIRMED) {
         $primary_keys = array('uid');
       }
     }
+    
     drupal_write_record('twilio_user', $number, $primary_keys);
 
-    $edit['twilio']['number'] = NULL;
-    $edit['twilio']['status'] = NULL;
-    $edit['twilio']['code'] = NULL;
-  }
+    }  
+  
 }
 
 /**
@@ -178,7 +181,13 @@ function twilio_user_send_confirmation($account, $number, $country) {
     'code' => $code,
   );
 
-  $account = user_save($account, array('twilio' => $data), 'twilio');
+
+   // 8/17/mcl: update array before call to user_save
+  $account->twilio_user = $data;  
+
+  //$account = user_save($account, array('twilio' => $data), 'twilio');  
+   twilio_user_save($account);   // diff hook for backdrop
+  
   $message = "Confirmation code: $code";
   twilio_send($number, $message, $country);
   return $account;

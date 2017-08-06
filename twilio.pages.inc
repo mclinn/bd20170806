@@ -180,11 +180,16 @@ function twilio_user_settings_confirm_form_submit($form, &$form_state) {
     drupal_set_message(t('Your mobile information has been removed'), 'status');
   }
   else {
-    $data = array(
+  	
+/*    $data = array(
       'number' => $account->twilio_user['number'],
       'status' => TWILIO_USER_CONFIRMED,
-    );
-    $account = user_save($account, array('twilio' => $data), 'twilio');
+    );*/
+    
+     // 8/17/mcl: new hook, only one param. modify $account first
+    $account->twilio_user['status'] = TWILIO_USER_CONFIRMED;         
+    //$account = user_save($account, array('twilio' => $data), 'twilio');
+    twilio_user_save($account);
     drupal_set_message(t('Your mobile number has been confirmed'), 'status');
   }
   $form_state['values']['account'] = $account;
