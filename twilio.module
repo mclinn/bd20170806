@@ -88,14 +88,30 @@ function twilio_menu() {
  
  
 function twilio_menu_alter(&$callbacks) {
-  $callbacks['user/%user_category/edit/twilio']['page callback'] = 'twilio_user_settings';
+
+ // 8/17/mcl next 2: from sms framework user module, show 2d level tabs?
+ $callbacks['user/%user/edit/default']['title'] = 'Account';
+  $callbacks['user/%user/edit/default']['type'] = MENU_DEFAULT_LOCAL_TASK;	
+  
+  $callbacks['user/%user/edit/twilio']['title'] = 'Twilio SMS';
+  $callbacks['user/%user/edit/twilio']['page callback'] = 'twilio_user_settings';
+  $callbacks['user/%user/edit/twilio']['module'] = 'twilio';
+  $callbacks['user/%user/edit/twilio']['page arguments'] = array(1);
+  $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';
+  $callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');
+  $callbacks['user/%user/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
+  // 8/17/mcl: next 1
+  $callbacks['user/%user/edit/twilio']['access callback'] = TRUE;
+  
+	
+  /*$callbacks['user/%user_category/edit/twilio']['page callback'] = 'twilio_user_settings';
   $callbacks['user/%user_category/edit/twilio']['module'] = 'twilio';
   $callbacks['user/%user_category/edit/twilio']['page arguments'] = array(1);
   $callbacks['user/%user_category/edit/twilio']['file'] = 'twilio.pages.inc';
   $callbacks['user/%user_category/edit/twilio']['access callback'] = array('twilio_edit_access');
   $callbacks['user/%user_category/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
   // 8/17/mcl: next 1
-  $callbacks['user/%user_category/edit/twilio']['access callback'] = TRUE;
+  $callbacks['user/%user_category/edit/twilio']['access callback'] = TRUE;*/
 }
 
 
@@ -165,7 +181,7 @@ function twilio_libraries_info() {
 function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, $media = NULL, $options = array()) {
 	
 	// 8/17/mcl
-   if (false)  {
+   if (true)  {
      drupal_set_message("DEBUG: No message sent");
      return;
    }
@@ -560,7 +576,7 @@ function twilio_views_api() {
  */
  
  
-function user_category_load($uid, &$map, $index) {
+/*function user_category_load($uid, &$map, $index) {
   static $user_categories, $accounts;
 
   // Cache $account - this load function will get called for each profile tab.
@@ -593,20 +609,21 @@ function user_category_load($uid, &$map, $index) {
     }
   }
   return $valid ? $account : FALSE;
-}
+}*/
 
 
 
 /**
  * Implements hook_form_alter().
  * 8/17/mcl: add twilio link to user profile page
+ *  removed, menu_alter creates 2d level tabs
  */
 
-function twilio_form_alter(&$form, $form_state, $form_id) {	
+/*function twilio_form_alter(&$form, $form_state, $form_id) {	
 	  if ('user_profile_form' === $form_id) {	  	 
 	  	  $form['modified'] = array(
           '#markup' => '<b>Twilio SMS Service</b><p><a href = "edit/twilio">View / Modify Settings</a></p>',
           '#weight' => -5,
          );
 	  }	
-}
+}*/
