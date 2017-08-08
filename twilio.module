@@ -186,7 +186,11 @@ function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, 
      return;
    }
 	
-  switch (variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE)) {
+	// config object for backdrop config system
+	$config = config('twilio.settings');
+	
+  //switch (variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE)) {
+  switch ($config->get('twilio_long_sms')) {
     case TWILIO_SMS_LONG_TRUNCATE:
       // Truncate the message to 160 characters.
       $message_truncated = substr($message, 0, 160);
@@ -236,11 +240,18 @@ function twilio_command($command = '', $data = array()) {
 
   // Try to load the library and check if that worked.
   if (($library = libraries_load(TWILIO_LIBRARY)) && !empty($library['loaded'])) {
-
+    
+    // config object for backdrop config system
+	$config = config('twilio.settings');
+    
     // Set our account_sid, auth_token, and number.
-    $account_sid = variable_get('twilio_account', FALSE);
+    /*$account_sid = variable_get('twilio_account', FALSE);
     $auth_token = variable_get('twilio_token', FALSE);
-    $number = variable_get('twilio_number', FALSE);
+    $number = variable_get('twilio_number', FALSE);*/
+    
+    $account_sid = $config->get('twilio_account');
+    $auth_token = $config->get('twilio_token');
+    $number = $config->get('twilio_number');
 
     // If we don't have one of our twilio variables don't bother doing anything.
     if (!$account_sid || !$auth_token || !$number) {
