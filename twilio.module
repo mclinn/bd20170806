@@ -88,30 +88,14 @@ function twilio_menu() {
  
  
 function twilio_menu_alter(&$callbacks) {
-
- // 8/17/mcl next 2: from sms framework user module, show 2d level tabs?
- $callbacks['user/%user/edit/default']['title'] = 'Account';
-  $callbacks['user/%user/edit/default']['type'] = MENU_DEFAULT_LOCAL_TASK;	
-  
-  $callbacks['user/%user/edit/twilio']['title'] = 'Twilio SMS';
-  $callbacks['user/%user/edit/twilio']['page callback'] = 'twilio_user_settings';
-  $callbacks['user/%user/edit/twilio']['module'] = 'twilio';
-  $callbacks['user/%user/edit/twilio']['page arguments'] = array(1);
-  $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';
-  $callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');
-  $callbacks['user/%user/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
-  // 8/17/mcl: next 1
-  $callbacks['user/%user/edit/twilio']['access callback'] = TRUE;
-  
-	
-  /*$callbacks['user/%user_category/edit/twilio']['page callback'] = 'twilio_user_settings';
+  $callbacks['user/%user_category/edit/twilio']['page callback'] = 'twilio_user_settings';
   $callbacks['user/%user_category/edit/twilio']['module'] = 'twilio';
   $callbacks['user/%user_category/edit/twilio']['page arguments'] = array(1);
   $callbacks['user/%user_category/edit/twilio']['file'] = 'twilio.pages.inc';
   $callbacks['user/%user_category/edit/twilio']['access callback'] = array('twilio_edit_access');
   $callbacks['user/%user_category/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
   // 8/17/mcl: next 1
-  $callbacks['user/%user_category/edit/twilio']['access callback'] = TRUE;*/
+  $callbacks['user/%user_category/edit/twilio']['access callback'] = TRUE;
 }
 
 
@@ -181,16 +165,12 @@ function twilio_libraries_info() {
 function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, $media = NULL, $options = array()) {
 	
 	// 8/17/mcl
-   if (true)  {
+   if (false)  {
      drupal_set_message("DEBUG: No message sent");
      return;
    }
 	
-	// config object for backdrop config system
-	$config = config('twilio.settings');
-	
-  //switch (variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE)) {
-  switch ($config->get('twilio_long_sms')) {
+  switch (variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE)) {
     case TWILIO_SMS_LONG_TRUNCATE:
       // Truncate the message to 160 characters.
       $message_truncated = substr($message, 0, 160);
@@ -240,18 +220,11 @@ function twilio_command($command = '', $data = array()) {
 
   // Try to load the library and check if that worked.
   if (($library = libraries_load(TWILIO_LIBRARY)) && !empty($library['loaded'])) {
-    
-    // config object for backdrop config system
-	$config = config('twilio.settings');
-    
+
     // Set our account_sid, auth_token, and number.
-    /*$account_sid = variable_get('twilio_account', FALSE);
+    $account_sid = variable_get('twilio_account', FALSE);
     $auth_token = variable_get('twilio_token', FALSE);
-    $number = variable_get('twilio_number', FALSE);*/
-    
-    $account_sid = $config->get('twilio_account');
-    $auth_token = $config->get('twilio_token');
-    $number = $config->get('twilio_number');
+    $number = variable_get('twilio_number', FALSE);
 
     // If we don't have one of our twilio variables don't bother doing anything.
     if (!$account_sid || !$auth_token || !$number) {
@@ -345,6 +318,9 @@ function twilio_command($command = '', $data = array()) {
  * Callback for incoming messages.
  */
 function twilio_receive_message() {
+	
+	//echo "this is dorky!!!";
+	
   if (!empty($_REQUEST['From']) && !empty($_REQUEST['Body']) && !empty($_REQUEST['ToCountry']) && twilio_command('validate')) {
     $codes = twilio_country_codes();
     $message_code = twilio_get_country_short_codes($_REQUEST['ToCountry']);
@@ -365,6 +341,12 @@ function twilio_receive_message() {
     watchdog('Twilio', 'An SMS message was sent from @number containing the message "@message"', array('@number' => $number, '@message' => $message));
     twilio_sms_incoming($number, $number_twilio, $message, $media, $options);
   }
+  
+  // 8/17/mcl
+  else {
+  	echo "here is the else block";
+  	}
+  
 }
 
 /**
@@ -580,13 +562,60 @@ function twilio_views_api() {
   );
 }
 
+
+// 8/17/mcl: copy from drupal 7 core user.modules
 /**
- * Implements hook_config_info().
+ * Return a user object after checking if any profile category in the path exists.
  */
-function twilio_config_info() {
-  $prefixes['twilio.settings'] = array(
-    'label' => t('Twilio Settings'),
-    'group' => t('Configuration'),
-  );  
-  return $prefixes;
-} 
+ 
+ 
+function user_category_load($uid, &$map, $index) {
+  static $user_categories, $accounts;
+
+  // Cache $account - this load function will get called for each profile tab.
+  if (!isset($accounts[$uid])) {
+    $accounts[$uid] = user_load($uid);
+  }
+  $valid = TRUE;
+  if ($account = $accounts[$uid]) {
+    // Since the path is like user/%/edit/category_name, the category name will
+    // be at a position 2 beyond the index corresponding to the % wildcard.
+    $category_index = $index + 2;
+    // Valid categories may contain slashes, and hence need to be imploded.
+    $category_path = implode('/', array_slice($map, $category_index));
+    if ($category_path) {
+      // Check that the requested category exists.
+      $valid = FALSE;
+      if (!isset($user_categories)) {
+        $user_categories = _user_categories();
+      }
+      foreach ($user_categories as $category) {
+        if ($category['name'] == $category_path) {
+          $valid = TRUE;
+          // Truncate the map array in case the category name had slashes.
+          $map = array_slice($map, 0, $category_index);
+          // Assign the imploded category name to the last map element.
+          $map[$category_index] = $category_path;
+          break;
+        }
+      }
+    }
+  }
+  return $valid ? $account : FALSE;
+}
+
+
+
+/**
+ * Implements hook_form_alter().
+ * 8/17/mcl: add twilio link to user profile page
+ */
+
+function twilio_form_alter(&$form, $form_state, $form_id) {	
+	  if ('user_profile_form' === $form_id) {	  	 
+	  	  $form['modified'] = array(
+          '#markup' => '<b>Twilio SMS Service</b><p><a href = "edit/twilio">View / Modify Settings</a></p>',
+          '#weight' => -5,
+         );
+	  }	
+}
