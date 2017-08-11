@@ -37,7 +37,7 @@ function twilio_user_settings_form($form, &$form_state, $account) {
     $form['number'] = array(
       '#type' => 'textfield',
       '#title' => t('Phone number'),
-      '#description' => t('A confirmation code will be sent to via SMS to the number provided'),
+      '#description' => t('A confirmation code will be sent via SMS to the number provided'),
       '#size' => 40,
       '#maxlength' => 255,
       '#required' => TRUE,
