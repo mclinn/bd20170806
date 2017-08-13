@@ -109,7 +109,7 @@ function twilio_twiml_delete_confirm($form, &$form_state, $twiml = FALSE) {
 function twilio_twiml_delete_confirm_submit($form, &$form_state) {
   if ($form_state['values']['confirm']) {
     twilio_twiml_delete($form_state['values']['twiml']['twiml_id']);
-    drupal_set_message(t('%title has been deleted.', array('%title' => $form_state['values']['twiml']['name'])));
+    backdrop_set_message(t('%title has been deleted.', array('%title' => $form_state['values']['twiml']['name'])));
   }
 
   $form_state['redirect'] = TWILIO_ADMIN_PATH . '/twiml';

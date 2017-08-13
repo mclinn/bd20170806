@@ -9,7 +9,7 @@
  */
 function twilio_install() {
   $t = get_t();
-  drupal_set_message($t("Twilio module settings are available under !link",
+  backdrop_set_message($t("Twilio module settings are available under !link",
     array( '!link' => l($t('Administer > Site configuration > Twilio'),  'admin/config/system/twilio'))
   ));
 }

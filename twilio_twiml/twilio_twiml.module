@@ -12,7 +12,7 @@ function twilio_twiml_menu() {
   $items[TWILIO_ADMIN_PATH . '/twiml'] = array(
     'title' => 'TwiML Manager',
     'description' => 'Manage TwiML documents.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('twilio_twiml_manager_form'),
     'access arguments' => array('administer twilio'),
     'file' => 'twilio_twiml.admin.inc',
@@ -22,7 +22,7 @@ function twilio_twiml_menu() {
   $items[TWILIO_ADMIN_PATH . '/twiml_delete/%twilio_twiml'] = array(
     'title' => 'TwiML Delete',
     'description' => 'Manage TwiML documents.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('twilio_twiml_delete_confirm', 5),
     'access arguments' => array('administer twilio'),
     'file' => 'twilio_twiml.admin.inc',
@@ -161,7 +161,7 @@ function twilio_twiml_load_multiple($twiml_ids = FALSE) {
  */
 function twilio_twiml_display($twiml) {
   // Set the header to XML.
-  drupal_add_http_header('Content-Type', 'text/xml; utf-8');
+  backdrop_add_http_header('Content-Type', 'text/xml; utf-8');
   // If PHP is enabled run the document through PHP evaluation.
   if (module_exists('php')) {
     echo php_eval($twiml['data']);

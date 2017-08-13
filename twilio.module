@@ -32,7 +32,7 @@ function twilio_menu() {
   $items[TWILIO_ADMIN_PATH] = array(
     'title' => 'Twilio',
     'description' => 'Administer your twilio settings',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('twilio_admin_form'),
     'access arguments' => array('administer twilio'),
     'file' => 'twilio.admin.inc',
@@ -45,7 +45,7 @@ function twilio_menu() {
   $items[TWILIO_ADMIN_PATH . '/test'] = array(
     'title' => 'Send Test SMS message',
     'description' => 'Test your Twilio SMS functionality',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('twilio_admin_test_form'),
     'access arguments' => array('administer twilio'),
     'file' => 'twilio.admin.inc',
@@ -182,7 +182,7 @@ function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, 
 	
 	// 8/17/mcl
    if (true)  {
-     drupal_set_message("DEBUG: No message sent");
+     backdrop_set_message("DEBUG: No message sent");
      return;
    }
 	
@@ -283,7 +283,7 @@ function twilio_command($command = '', $data = array()) {
               watchdog('Twilio', $e->getMessage(), array(), WATCHDOG_ERROR);
               $link = l($e->getInfo(), $e->getInfo());
               $message = t('Twilio has returned the error: "@error". For more information visit the following link. !link', array('@error' => $e->getMessage(), '!link' => $link));
-              drupal_set_message($message, 'error');
+              backdrop_set_message($message, 'error');
             }
             if (!empty($response->status) && $response->status == 'failed') {
               watchdog('Twilio', 'An unkown error occured during the HTTP request');
@@ -576,7 +576,7 @@ function twilio_verify_number($number, $return_user = FALSE) {
 function twilio_views_api() {
   return array(
     'api' => 3,
-    'path' => drupal_get_path('module', 'twilio'),
+    'path' => backdrop_get_path('module', 'twilio'),
   );
 }
 

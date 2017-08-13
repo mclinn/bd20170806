@@ -15,7 +15,7 @@ function twilio_admin_form($form, &$form_state) {
     if (!$library['installed']) {
       $twilio_readme_link = l(t('README.txt'), 'http://drupalcode.org/project/twilio.git/blob/refs/heads/7.x-1.x:/README.txt');
       $twilio_error_text = t('The Twilo library was not detected or installed correctly. Please review the installation instructions provided in the !link file', array('!link' => $twilio_readme_link));
-      drupal_set_message($twilio_error_text, 'error');
+      backdrop_set_message($twilio_error_text, 'error');
     }
   }
 
@@ -195,9 +195,9 @@ function twilio_admin_test_form_submit($form, &$form_state) {
     !empty($form_state['values']['media']) ? $form_state['values']['media'] : NULL
   );
   if ($sent) {
-    drupal_set_message(t('Your message has been sent'));
+    backdrop_set_message(t('Your message has been sent'));
   }
   else {
-    drupal_set_message(t('Unable to send your message.'), 'error');
+    backdrop_set_message(t('Unable to send your message.'), 'error');
   }
 }

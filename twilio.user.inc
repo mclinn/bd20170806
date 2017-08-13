@@ -77,7 +77,7 @@ function twilio_user_save($account) {
       }
     }
     
-    drupal_write_record('twilio_user', $number, $primary_keys);
+    backdrop_write_record('twilio_user', $number, $primary_keys);
 
     }  
   
@@ -91,7 +91,7 @@ function twilio_user_login(&$edit, $account) {
   // need to enter their verification code and link to their settings page.
   if (twilio_edit_access($account) && !empty($account->twilio_user) && $account->twilio_user['status'] == 1) {
     $account_link = l(t("account settings page"), 'user/' . $account->uid . '/edit/twilio');
-    drupal_set_message(t("You must confirm your phone number by entering the verification code sent to you via SMS. Go to the !link to enter your verification code.", array('!link' => $account_link)), 'warning');
+    backdrop_set_message(t("You must confirm your phone number by entering the verification code sent to you via SMS. Go to the !link to enter your verification code.", array('!link' => $account_link)), 'warning');
   }
 }
 
