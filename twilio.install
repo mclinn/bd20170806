@@ -99,6 +99,7 @@ function twilio_requirements($phase) {
 
 /**
  * Implements hook_update_N()
+ * 8/17/mcl
  */
 function twilio_update_1000() {
   // Migrate variables to config.
@@ -123,6 +124,7 @@ function twilio_update_1000() {
 
 /**
  * Implements hook_update_last_removed().
+ * 8/17/mcl
  */
 function twilio_update_last_removed() {
   return 7002;
