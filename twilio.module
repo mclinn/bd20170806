@@ -63,22 +63,6 @@ function twilio_menu() {
     'type' => MENU_CALLBACK,
   );
   
-
-// 8/17/mcl: test menu entry
-  //$items['twilio/%user/edit/twilio'] = array(
-  /*
-  $items['user/%user_category/edit/twilio'] = array(
-    'page callback' => 'twilio_user_settings',
-    'module' => 'twilio',
-    'file' => 'twilio.pages.inc',
-    'page arguments' => array(1),
-    'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
-  );
-  */
-
-
-  
   return $items;
 }
 
