@@ -73,7 +73,7 @@ function twilio_menu() {
  
 function twilio_menu_alter(&$callbacks) {
 
- // 8/17/mcl next 2: from sms framework user module, show 2d level tabs?
+ // backdrop port, show 2d level tabs
  $callbacks['user/%user/edit/default']['title'] = 'Account';
   $callbacks['user/%user/edit/default']['type'] = MENU_DEFAULT_LOCAL_TASK;	
   
@@ -81,8 +81,10 @@ function twilio_menu_alter(&$callbacks) {
   $callbacks['user/%user/edit/twilio']['page callback'] = 'twilio_user_settings';
   $callbacks['user/%user/edit/twilio']['module'] = 'twilio';
   $callbacks['user/%user/edit/twilio']['page arguments'] = array(1);
-  $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';
-  $callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');
+  $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';  
+  //$callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');   
+  // change for backdrop 
+  $callbacks['user/%user/edit/twilio']['access arguments'] = array('edit own sms number');  
   $callbacks['user/%user/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
   
 }
@@ -164,6 +166,7 @@ function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, 
 	
   //switch (variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE)) {
   switch ($config->get('twilio_long_sms')) {
+  //switch (config_get('twilio.settings', 'twilio_long_sms')) {
     case TWILIO_SMS_LONG_TRUNCATE:
       // Truncate the message to 160 characters.
       $message_truncated = substr($message, 0, 160);
