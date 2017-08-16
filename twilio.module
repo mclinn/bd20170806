@@ -84,18 +84,7 @@ function twilio_menu_alter(&$callbacks) {
   $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';
   $callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');
   $callbacks['user/%user/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
-  // 8/17/mcl: next 1
-  $callbacks['user/%user/edit/twilio']['access callback'] = TRUE;
   
-	
-  /*$callbacks['user/%user_category/edit/twilio']['page callback'] = 'twilio_user_settings';
-  $callbacks['user/%user_category/edit/twilio']['module'] = 'twilio';
-  $callbacks['user/%user_category/edit/twilio']['page arguments'] = array(1);
-  $callbacks['user/%user_category/edit/twilio']['file'] = 'twilio.pages.inc';
-  $callbacks['user/%user_category/edit/twilio']['access callback'] = array('twilio_edit_access');
-  $callbacks['user/%user_category/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
-  // 8/17/mcl: next 1
-  $callbacks['user/%user_category/edit/twilio']['access callback'] = TRUE;*/
 }
 
 
