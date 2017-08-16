@@ -73,7 +73,7 @@ function twilio_menu() {
  
 function twilio_menu_alter(&$callbacks) {
 
- // 8/17/mcl next 2: from sms framework user module, show 2d level tabs?
+ // backdrop port, show 2d level tabs
  $callbacks['user/%user/edit/default']['title'] = 'Account';
   $callbacks['user/%user/edit/default']['type'] = MENU_DEFAULT_LOCAL_TASK;	
   
@@ -81,8 +81,10 @@ function twilio_menu_alter(&$callbacks) {
   $callbacks['user/%user/edit/twilio']['page callback'] = 'twilio_user_settings';
   $callbacks['user/%user/edit/twilio']['module'] = 'twilio';
   $callbacks['user/%user/edit/twilio']['page arguments'] = array(1);
-  $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';
-  $callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');
+  $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';  
+  //$callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');   
+  // change for backdrop  
+  $callbacks['user/%user/edit/twilio']['access arguments'] = array('edit own sms number');  
   $callbacks['user/%user/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
   
 }
@@ -153,17 +155,8 @@ function twilio_libraries_info() {
  */
 function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, $media = NULL, $options = array()) {
 	
-	// 8/17/mcl
-   if (true)  {
-     backdrop_set_message("DEBUG: No message sent");
-     return;
-   }
-	
-	// config object for backdrop config system
-	$config = config('twilio.settings');
-	
-  //switch (variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE)) {
-  switch ($config->get('twilio_long_sms')) {
+  // backdrop change
+  switch (config_get('twilio.settings', 'twilio_long_sms')) { 
     case TWILIO_SMS_LONG_TRUNCATE:
       // Truncate the message to 160 characters.
       $message_truncated = substr($message, 0, 160);
@@ -218,9 +211,7 @@ function twilio_command($command = '', $data = array()) {
 	$config = config('twilio.settings');
     
     // Set our account_sid, auth_token, and number.
-    /*$account_sid = variable_get('twilio_account', FALSE);
-    $auth_token = variable_get('twilio_token', FALSE);
-    $number = variable_get('twilio_number', FALSE);*/
+    // use config object for backdrop port
     
     $account_sid = $config->get('twilio_account');
     $auth_token = $config->get('twilio_token');
