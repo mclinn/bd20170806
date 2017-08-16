@@ -83,7 +83,7 @@ function twilio_menu_alter(&$callbacks) {
   $callbacks['user/%user/edit/twilio']['page arguments'] = array(1);
   $callbacks['user/%user/edit/twilio']['file'] = 'twilio.pages.inc';  
   //$callbacks['user/%user/edit/twilio']['access callback'] = array('twilio_edit_access');   
-  // change for backdrop 
+  // change for backdrop  
   $callbacks['user/%user/edit/twilio']['access arguments'] = array('edit own sms number');  
   $callbacks['user/%user/edit/twilio'][ 'type'] = MENU_LOCAL_TASK;
   
@@ -155,18 +155,13 @@ function twilio_libraries_info() {
  */
 function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, $media = NULL, $options = array()) {
 	
-	// 8/17/mcl
-   if (true)  {
-     backdrop_set_message("DEBUG: No message sent");
-     return;
-   }
 	
 	// config object for backdrop config system
-	$config = config('twilio.settings');
+//	$config = config('twilio.settings');
 	
   //switch (variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE)) {
-  switch ($config->get('twilio_long_sms')) {
-  //switch (config_get('twilio.settings', 'twilio_long_sms')) {
+  //switch ($config->get('twilio_long_sms')) {
+  switch (config_get('twilio.settings', 'twilio_long_sms')) { 
     case TWILIO_SMS_LONG_TRUNCATE:
       // Truncate the message to 160 characters.
       $message_truncated = substr($message, 0, 160);
