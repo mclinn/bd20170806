@@ -60,9 +60,8 @@ function twilio_user_delete($account) {
 
 /**
  * Saves mobile number data to the {twilio_user} table in the database.
- *  8/17/mcl: modify call, only one param in backdrop hook_user_save
+ *  modify call, only one param in backdrop hook_user_save
  */
-//function twilio_user_save(&$edit, $account, $category) {
 function twilio_user_save($account) {  
 
  if (isset($account->twilio_user['status'])) {
@@ -182,10 +181,9 @@ function twilio_user_send_confirmation($account, $number, $country) {
   );
 
 
-   // 8/17/mcl: update array before call to user_save
+   // update array before call to twilio_user_save
   $account->twilio_user = $data;  
-
-  //$account = user_save($account, array('twilio' => $data), 'twilio');  
+  
    twilio_user_save($account);   // diff hook for backdrop
   
   $message = "Confirmation code: $code";

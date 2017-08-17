@@ -26,24 +26,21 @@ function twilio_admin_form($form, &$form_state) {
   $form['twilio_account'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#title' => t('Twilio Account SID'),
-    //'#default_value' => variable_get('twilio_account'),
+    '#title' => t('Twilio Account SID'),    
     '#default_value' => $config->get('twilio_account'),
     '#description' => t('Enter your Twilio account id'),
   );
   $form['twilio_token'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#title' => t('Twilio Auth Token'),
-    //'#default_value' => variable_get('twilio_token'),
+    '#title' => t('Twilio Auth Token'),    
     '#default_value' => $config->get('twilio_token'),
     '#description' => t('Enter your Twilio token id'),
   );
   $form['twilio_number'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#title' => t('Twilio Phone Number'),
-    //'#default_value' => variable_get('twilio_number'),
+    '#title' => t('Twilio Phone Number'),    
     '#default_value' => $config->get('twilio_number'),
     
     '#description' => t('Enter your Twilio phone number'),
@@ -52,16 +49,14 @@ function twilio_admin_form($form, &$form_state) {
     '#type' => 'radios',
     '#title' => t('Long SMS handling'),
     '#description' => t('How would you like to handle SMS messages longer than 160 characters.'),
-    '#options' => array(t('Send multiple messages'), t('Truncate message to 160 characters')),
-   // '#default_value' => variable_get('twilio_long_sms', TWILIO_SMS_LONG_MULTIPLE),
+    '#options' => array(t('Send multiple messages'), t('Truncate message to 160 characters')),   
     '#default_value' => $config->get('twilio_long_sms'),
   );
   $form['twilio_registration_form'] = array(
     '#type' => 'radios',
     '#title' => t('Show mobile fields during user registration'),
     '#description' => t('Specify if the site should collect mobile information during registration.'),
-    '#options' => array(t('Disabled'), t('Optional'), t('Required')),
- //   '#default_value' => variable_get('twilio_registration_form', 0),
+    '#options' => array(t('Disabled'), t('Optional'), t('Required')), 
     '#default_value' => $config->get('twilio_registration_form'),
   );
 
@@ -75,8 +70,7 @@ function twilio_admin_form($form, &$form_state) {
 
   $form['twilio_country_codes_container']['twilio_country_codes'] = array(
     '#type' => 'checkboxes',
-    '#options' => twilio_country_codes(TRUE),
-   // '#default_value' => variable_get('twilio_country_codes', array()),
+    '#options' => twilio_country_codes(TRUE),   
     '#default_value' => $config->get('twilio_country_codes'),
   );
 
@@ -120,8 +114,7 @@ function twilio_admin_form($form, &$form_state) {
  *  system_settings_form()
  */
 
-function twilio_admin_form_submit($form, &$form_state) {
-	//backdrop_set_message("this is the new submit form");	
+function twilio_admin_form_submit($form, &$form_state) {	
 	// new config object
 	$config = config('twilio.settings');
 	$config->set('twilio_number', $form_state['values']['twilio_number']);
