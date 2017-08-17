@@ -1,10 +1,13 @@
-modif 8/6/17
---------------------------------------------------------------------------------
                                  Twilio
 --------------------------------------------------------------------------------
 
 Maintainers:
+-----------
  * Arvin Singla (arvinsingla), arvin.singla@gmail.com
+
+
+Description
+-----------
 
 The Twilio module provides integration with the Twilio cloud communication
 platform allowing for your Drupal site to integration Voice and SMS
