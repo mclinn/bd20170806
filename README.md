@@ -1,16 +1,8 @@
-                                 Twilio
---------------------------------------------------------------------------------
-
-Maintainers:
------------
- * Arvin Singla (arvinsingla), arvin.singla@gmail.com
-
-
-Description
------------
+Twilio
+======================
 
 The Twilio module provides integration with the Twilio cloud communication
-platform allowing for your Drupal site to integration Voice and SMS
+platform allowing for your Backdrop site to integrate Voice and SMS
 functionality. 
 
 The module currently provides the following functionality:
@@ -22,29 +14,44 @@ The module currently provides the following functionality:
 - User object phone number storage and validation
 - Uses libraries api to manage the Twilio php library
 
-Project homepage: http://drupal.org/project/twilio
-
-
-Dependencies
-------------
-
-* Libraries API - http://www.drupal.org/project/libraries
-
-The Rules module (http://www.drupal.org/project/rules) is required to use the
-rules integration.
-
+Project homepage: http://backdropcms.org/project/twilio
+Twilio: https://www.twilio.com
 
 Installation
 ------------
 
-1. Install the Twilio module as per (http://drupal.org/node/895232/)
+1. Install this module using the official Backdrop CMS instructions at https://backdropcms.org/guide/modules
 2. Download the Twilio php library from (http://www.twilio.com/docs/libraries).
 3. Extract the library in your sites/all/libraries folder and rename the
-   directory to 'twilio'.
+    directory to 'twilio'.
 4. Visit 'admin/config/system/twilio' and enter your Twilio API information
-   found on the twilio dashboard 
-
+    found on the twilio dashboard (twilio.com account required)
 
 Documentation
 -------------
-* Documentation is currently being written and will be posted on d.o soon.
+
+Additional documentation is located in the Wiki:
+https://github.com/backdrop-contrib/twilio/wiki/Documentation
+
+Issues
+------
+
+Bugs and Feature requests should be reported in the Issue Queue:
+https://github.com/backdrop-contrib/twilio/issues
+
+Current Maintainers
+-------------------
+
+- Marc Linn (https://github.com/mclinn)
+
+Credits
+-------
+
+- Ported to Backdrop CMS by Marc Linn (https://github.com/mclinn).
+- Originally written for Drupal by Arvin Singla (arvinsingla), arvin.singla@gmail.com
+
+License
+-------
+
+This project is GPL v2 software. See the LICENSE.txt file in this directory for
+complete text.
