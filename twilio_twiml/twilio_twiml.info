@@ -1,8 +1,0 @@
-name = Twilio TwiML
-description = Add TwiML support to the Twilio Module
-backdrop = 1.x
-type = module
-package = Twilio
-dependencies[] = twilio
-
-
