@@ -4,7 +4,7 @@ name = Twilio
 description = Integration of Twilio cloud communication service with Backdrop 
 backdrop = 1.x
 package = Twilio
-dependencies[] = libraries
+; dependencies[] = libraries
 type = module
 
 

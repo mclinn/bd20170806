@@ -25,6 +25,13 @@ module_load_include('inc', 'twilio', 'twilio.user');
 module_load_include('inc', 'twilio', 'twilio.codes');
 module_load_include('inc', 'twilio', 'twilio.actions');
 
+
+// twilio library files now included
+$libpath = backdrop_get_path('module', 'twilio');
+require_once "$libpath/libraries/Services/Twilio.php" ;
+
+
+
 /**
  * Implements hook_menu().
  */
@@ -205,7 +212,7 @@ function twilio_send($number, $message, $country = TWILIO_DEFAULT_COUNTRY_CODE, 
 function twilio_command($command = '', $data = array()) {
 
   // Try to load the library and check if that worked.
-  if (($library = libraries_load(TWILIO_LIBRARY)) && !empty($library['loaded'])) {
+//  if (($library = libraries_load(TWILIO_LIBRARY)) && !empty($library['loaded'])) {
     
     // config object for backdrop config system
 	$config = config('twilio.settings');
@@ -298,10 +305,10 @@ function twilio_command($command = '', $data = array()) {
         }
         break;
     }
-  }
-  else {
-    watchdog('Twilio', 'The twilio library was not loaded properly');
-  }
+//  }
+ // else {
+ //   watchdog('Twilio', 'The twilio library was not loaded properly');
+ // }
   return FALSE;
 }
 
