@@ -7,13 +7,14 @@ functionality.
 
 The module currently provides the following functionality:
 
-- Rules event to act on incoming SMS message - Rules action to send an SMS
-message - Hook for incoming SMS messages - Hook for incoming voice calls - User
-object phone number storage and validation - Uses libraries api to manage the
-Twilio php library
+- Rules event to act on incoming SMS message
+- Rules action to send an SMS message 
+- Hook for incoming SMS messages 
+- Hook for incoming voice calls 
+- User object phone number storage and validation 
 
-Project homepage: http://backdropcms.org/project/twilio Twilio:
-https://www.twilio.com
+Project homepage: http://backdropcms.org/project/twilio 
+Twilio: https://www.twilio.com
 
 Installation 
 ------------
@@ -50,8 +51,8 @@ Current Maintainers
 Credits 
 -------
 
-- Ported to Backdrop CMS by Marc Linn (https://github.com/mclinn). - Originally
-written for Drupal by Arvin Singla (arvinsingla), arvin.singla@gmail.com
+- Ported to Backdrop CMS by Marc Linn (https://github.com/mclinn). 
+- Originally written for Drupal by Arvin Singla (arvinsingla), arvin.singla@gmail.com
 
 License 
 -------
