@@ -1,5 +1,4 @@
-Twilio
-======================
+                         Twilio ======================
 
 The Twilio module provides integration with the Twilio cloud communication
 platform allowing for your Backdrop site to integrate Voice and SMS
@@ -23,7 +22,7 @@ Installation
 1. Install this module using the official Backdrop CMS instructions at https://backdropcms.org/guide/modules
 
 2. You will need an account at twilio.com. If you don't have one you can create a trial account with a "trial balance" to allow you to experiment. 
-When the trial is over, you'll need at least one Twilio number, $1.00 per month as of now (August 2017).  Usage rates are on the site. Example: domestic SMS messages are $.0075 each as of now. 
+When the trial is over, you'll need at least one Twilio number, $1.00 per month as of now (August 2017).  Usage rates are on the site. Example: domestic USA SMS messages are $.0075 each as of now. 
 
 3. Visit 'admin/config/system/twilio' and enter your Twilio API information
     found on the twilio dashboard.
@@ -54,5 +53,4 @@ Credits
 License
 -------
 
-This project is GPL v2 software. See the LICENSE.txt file in this directory for
-complete text.
+This project is GPL v2 software. See the LICENSE.txt file in this directory for complete text.
