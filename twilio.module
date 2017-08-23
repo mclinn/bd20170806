@@ -619,3 +619,21 @@ function twilio_form_alter(&$form, $form_state, $form_id) {
          );
 	  }	
 }
+
+
+
+
+
+function xxxtwilio_rules_action_info() {
+  return array(
+    'abc_custom_action' => array(
+      'label' => t('TWILIO Custom Action'),
+      'configurable' => FALSE,
+      'group' => t('mcl actions'),
+      'module' => 'mcl001',
+      'callbacks' => array(
+        'execute' => 'mcl001_twrules',
+      ),
+    ),
+  );
+}

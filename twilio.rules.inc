@@ -127,6 +127,17 @@ function twilio_rules_action_info() {
     'group' => t('Twilio'),
     'module' => 'twilio',
   );
+  
+  $actions['mcl_action_002'] = array(
+      'label' => t('TWILIO new dorky Custom Action'),
+      'configurable' => FALSE,
+      'group' => t('mcl actions'),
+      'module' => 'mcl001',
+      'callbacks' => array(
+        'execute' => 'mcl001_twrules',
+      ),
+  );
+  
   $actions['twilio_send_sms_to_user'] = $defaults + array(
     'label' => t('Send an SMS to a user'),
     'base' => 'twilio_rules_action_send_sms_to_user',
